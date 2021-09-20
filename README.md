@@ -1,1 +1,0 @@
-# lingscale.github.io

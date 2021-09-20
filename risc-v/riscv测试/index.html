@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.79.0" /><meta name="theme-color" content="#fff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>risc-v测试 | Chisel RISC-V</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="riscv.cn" /><meta name="description" content="测试测试测试，测试！ 测试：测试。 测试测试：测试。 2021年4月26日 &amp;n……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Chisel RISC-V" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Chisel RISC-V" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://www.riscv.cn/risc-v/riscv%E6%B5%8B%E8%AF%95/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "datePublished": "2021-04-26T06:00:00+08:00",
+        "dateModified": "2021-09-20T12:40:16+08:00",
+        "url": "http://www.riscv.cn/risc-v/riscv%E6%B5%8B%E8%AF%95/",
+        "name": "risc-v测试",
+        "description": "测试测试测试，测试！ 测试：测试。 测试测试：测试。 2021年4月26日 \u0026n……",
+        "image": "http://www.riscv.cn/icons/apple-touch-icon.png",
+        "license": "riscn.cn",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Chisel RISC-V",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://www.riscv.cn/icons/apple-touch-icon.png"
+            },
+            "url": "http://www.riscv.cn/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://www.riscv.cn/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:creator" content="@riscv.cn" />
+
+    
+
+
+
+<meta property="og:title" content="risc-v测试" />
+<meta property="og:description" content="测试测试测试，测试！ 测试：测试。 测试测试：测试。 2021年4月26日 &amp;n……" />
+<meta property="og:url" content="http://www.riscv.cn/risc-v/riscv%E6%B5%8B%E8%AF%95/" />
+<meta property="og:site_name" content="Chisel RISC-V" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://www.riscv.cn/icons/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+
+        <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+
+        
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100434861-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-100434861-1');
+    </script>
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=riscv.cn&amp;display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=riscv.cn&amp;display=swap" /></noscript>
+
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/"><svg xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 47.716 12.804"  class="brand"><path d="M 6.1269546,6.5899748 C 7.1480554,7.1907695 7.4007825,8.4778371 7.986411,9.4409336 7.6356244,9.5473862 6.9008921,9.5966817 6.8496515,8.9600429 6.3648047,8.10009 6.0422575,6.6909746 4.7773586,6.8752289 4.0697514,6.6937752 3.9201425,7.0703198 4.0350918,7.7114225 c 0,0.5908113 0,1.1816225 0,1.7724337 -0.6492203,0.1199984 -1.0121674,-0.046276 -0.8350915,-0.7525743 0,-1.8065537 0,-3.6131075 0,-5.4196612 1.1961089,0.095462 2.6058923,-0.3111926 3.586475,0.5599789 0.6927725,0.8104073 0.5172409,2.4519322 -0.6595207,2.7183752 z M 4.0350918,3.997884 c 0,0.7303605 0,1.4607211 0,2.1910816 C 4.8376113,6.1565063 6.0937907,6.4189973 6.2853429,5.3437972 6.5797893,4.0602421 5.1637615,3.9016246 4.2489637,3.997884 c -0.071291,0 -0.1425813,0 -0.2138719,0 z" style="fill:#e22e2d"/><path d="m 9.0869818,3.3116207 c 0.6492203,-0.1199984 1.0121672,0.046276 0.8350915,0.7525743 0,1.8065537 0,3.6131075 0,5.4196612 C 9.272853,9.6038546 8.9099059,9.4375797 9.0869818,8.7312819 c 0,-1.8065537 0,-3.6131075 0,-5.4196612 z" style="fill:#e22e2d"/><path d="m 15.284022,3.5141924 c 0.348102,1.5117213 -1.182291,0.023504 -2.03321,0.3803387 -1.807751,0.1136651 -1.025839,2.3181489 0.487359,2.0393684 1.386367,0.022175 2.440827,1.558919 1.682147,2.7985165 -0.934469,1.2495945 -2.802384,0.9367443 -4.084377,0.4785885 -0.358498,-1.5695895 1.069952,-0.072775 1.955437,-0.285254 1.792387,0.3658334 1.96111,-2.363074 0.133513,-2.2107072 -1.121125,-0.06255 -2.432245,-0.8444042 -2.07784,-2.1414837 0.399016,-1.7290779 2.66758,-1.4973776 3.936971,-1.0593672 z" style="fill:#e22e2d"/><path d="m 21.580281,3.787044 c 0.322677,1.6698187 -0.952346,-0.1828291 -1.914096,0.099219 -1.776958,-0.1554473 -2.515638,1.9070515 -2.103748,3.3521223 0.201341,1.6694802 2.36484,2.1334702 3.581695,1.2408809 C 21.985271,7.57544 21.6225,9.7992426 20.650105,9.4549174 18.953378,10.052626 16.79251,9.0219157 16.65319,7.1069977 c -0.317683,-1.616726 0.491142,-3.631681 2.29986,-3.8532547 0.900963,-0.1511521 1.868948,0.00685 2.627231,0.533301 z" style="fill:#e22e2d"/><path d="m 22.460847,6.8256195 c 0.742763,0 1.485526,0 2.228289,0 0.206651,0.7113806 -0.245707,0.7637516 -0.836194,0.677995 -0.417645,-0.1021325 -1.250167,0.2106108 -1.392095,-0.1672387 0,-0.1702521 0,-0.3405042 0,-0.5107563 z" style="fill:#e22e2d"/><path d="M 27.03318,9.4838562 C 26.247698,7.4264444 25.462216,5.3690325 24.676734,3.3116207 c 0.559216,-0.065686 1.065633,-0.055089 1.107893,0.6260955 0.573281,1.5234962 1.146561,3.0469924 1.719842,4.5704886 0.65319,-1.7321947 1.306381,-3.4643894 1.959571,-5.1965841 0.609353,-0.066824 1.102036,-0.053256 0.629933,0.625097 -0.704694,1.8490461 -1.409387,3.6980923 -2.114081,5.5471385 -0.315571,0 -0.631141,0 -0.946712,0 z" style="fill:#e22e2d"/><path d="M 38.546695,3.787044 C 38.869372,5.4568625 37.594349,3.6042155 36.632599,3.8862628 34.855641,3.730815 34.11696,5.7933139 34.52885,7.2383851 34.730191,8.9078657 36.893691,9.371855 38.110545,8.479266 38.951685,7.5754401 38.588914,9.7992422 37.616519,9.4549174 35.919792,10.052626 33.758924,9.0219165 33.619604,7.1069977 33.301922,5.490272 34.110745,3.4753165 35.919463,3.253743 c 0.900963,-0.151152 1.868949,0.00685 2.627232,0.533301 z" style="fill:#e22e2d"/><path d="m 39.844806,3.3116207 c 0.460352,0.089473 1.186833,-0.2633095 1.320279,0.3694153 0.846995,1.598032 1.693991,3.1960639 2.540986,4.7940958 0,-1.7211704 0,-3.4423407 0,-5.1635111 0.650641,-0.1296873 0.979851,0.062057 0.810287,0.7525743 0,1.8065537 0,3.6131075 0,5.4196612 C 44.056006,9.3943836 43.329525,9.7471657 43.196079,9.1144408 42.349084,7.5164089 41.502088,5.9183769 40.655093,4.320345 c 0,1.7211704 0,3.4423408 0,5.1635112 -0.650641,0.1296873 -0.979851,-0.062057 -0.810287,-0.7525743 0,-1.8065537 0,-3.6131075 0,-5.4196612 z" style="fill:#e22e2d"/></svg></a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/risc-v/"><span class="menu-item-name">RISC-V</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/chisel/"><span class="menu-item-name">Chisel</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+                    
+                        
+                        
+                            <li class="menu-item">
+                                <div id="lang-switcher">
+            <span>🇨🇳</span>
+            
+                
+                    <ul id="langs">
+                        
+                            
+                        
+                            
+                                <li><a rel="alternate" href="/en" hreflang="en" lang="en">🇺🇸</a></li>
+                            
+                        
+                    </ul>
+                
+            
+        </div>
+                            </li>
+                        
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="risc-v" data-toc-num="true">
+
+            <h1 class="post-title p-name">risc-v测试</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+              <p>测试<strong>测试</strong>测试，测试！</p>
+<p><strong>测试</strong>：测试。</p>
+<p><strong>测试测试</strong>：测试。</p>
+<div style="text-align: right">2021年4月26日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+
+            
+
+        </div>
+        <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('\/sw.js');
+            });
+        }
+    </script>
+
+
+        
+
+
+
+
+
+
+
+
+    <script src="/js/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
