@@ -10,7 +10,7 @@
         <title>Chisel RISC-V</title>
         <link>http://www.riscv.cn/</link>
         <description>riscv.cn</description>
-        <generator>Hugo 0.79.0 https://gohugo.io/</generator>
+        <generator>Hugo 0.88.1 https://gohugo.io/</generator>
         
             <language>zh-CN</language>
         
@@ -19,7 +19,7 @@
         
             <copyright>riscn.cn</copyright>
         
-        <lastBuildDate>Mon, 20 Sep 2021 21:15:49 &#43;0800</lastBuildDate>
+        <lastBuildDate>Sat, 18 Dec 2021 16:14:17 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="http://www.riscv.cn/rss.xml" />
         
