@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://www.riscv.cn/</loc>
-    <lastmod>2022-12-15T11:40:32+08:00</lastmod>
+    <lastmod>2022-12-15T21:59:49+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -19,19 +19,22 @@
     <lastmod>2022-12-15T08:16:55+08:00</lastmod>
   </url><url>
     <loc>http://www.riscv.cn/tags/misc/</loc>
-    <lastmod>2022-12-15T11:40:32+08:00</lastmod>
+    <lastmod>2022-12-15T21:59:49+08:00</lastmod>
   </url><url>
     <loc>http://www.riscv.cn/misc/</loc>
-    <lastmod>2022-12-15T11:40:32+08:00</lastmod>
+    <lastmod>2022-12-15T21:59:49+08:00</lastmod>
   </url><url>
     <loc>http://www.riscv.cn/misc/python%E6%B5%8F%E8%A7%88%E4%BD%93%E4%BC%9A/</loc>
     <lastmod>2022-12-15T08:30:51+08:00</lastmod>
   </url><url>
     <loc>http://www.riscv.cn/tags/</loc>
-    <lastmod>2022-12-15T11:40:32+08:00</lastmod>
+    <lastmod>2022-12-15T21:59:49+08:00</lastmod>
   </url><url>
-    <loc>http://www.riscv.cn/misc/uvm/</loc>
-    <lastmod>2022-12-15T11:40:32+08:00</lastmod>
+    <loc>http://www.riscv.cn/misc/uvm%E5%88%9D%E8%AF%86/</loc>
+    <lastmod>2022-12-15T11:40:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.riscv.cn/misc/%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D/</loc>
+    <lastmod>2022-12-15T21:59:49+08:00</lastmod>
   </url><url>
     <loc>http://www.riscv.cn/misc/systemverilog%E7%94%B1%E4%B8%89%E9%83%A8%E5%88%86%E7%BB%84%E6%88%90/</loc>
     <lastmod>2022-12-15T11:37:50+08:00</lastmod>

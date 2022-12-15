@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>同步复位与异步复位 | Chisel RISC-V</title>
+
+    <link rel="stylesheet" href="/css/meme.min.css" />
+
+    
+    
+        <script src="/js/meme.min.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;family=Cinzel&#43;Decorative:wght@700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="riscv.cn" /><meta name="description" content="同步复位： always @(posedge clock) if (~reset) 异步复位： always @(posedge clock or negedge reset) if (~reset) 同步复位优点： 1、有利于仿真器仿真。 2……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Chisel RISC-V" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Chisel RISC-V" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="http://www.riscv.cn/misc/%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "datePublished": "2022-12-15T06:00:00+08:00",
+        "dateModified": "2022-12-15T21:59:49+08:00",
+        "url": "http://www.riscv.cn/misc/%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D/",
+        "name": "同步复位与异步复位",
+        "description": "同步复位： always @(posedge clock) if (~reset) 异步复位： always @(posedge clock or negedge reset) if (~reset) 同步复位优点： 1、有利于仿真器仿真。 2……",
+        "image": "http://www.riscv.cn/icons/apple-touch-icon.png",
+        "license": "riscn.cn",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Chisel RISC-V",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://www.riscv.cn/icons/apple-touch-icon.png"
+            },
+            "url": "http://www.riscv.cn/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "http://www.riscv.cn/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:creator" content="@riscv.cn" />
+
+    
+
+
+
+<meta property="og:title" content="同步复位与异步复位" />
+<meta property="og:description" content="同步复位： always @(posedge clock) if (~reset) 异步复位： always @(posedge clock or negedge reset) if (~reset) 同步复位优点： 1、有利于仿真器仿真。 2……" />
+<meta property="og:url" content="http://www.riscv.cn/misc/%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D/" />
+<meta property="og:site_name" content="Chisel RISC-V" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="http://www.riscv.cn/icons/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+
+        <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+
+        
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100434861-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-100434861-1');
+    </script>
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=riscv.cn&amp;display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@700&amp;text=riscv.cn&amp;display=swap" /></noscript>
+
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/"><svg xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 47.716 12.804"  class="brand"><path d="M 6.1269546,6.5899748 C 7.1480554,7.1907695 7.4007825,8.4778371 7.986411,9.4409336 7.6356244,9.5473862 6.9008921,9.5966817 6.8496515,8.9600429 6.3648047,8.10009 6.0422575,6.6909746 4.7773586,6.8752289 4.0697514,6.6937752 3.9201425,7.0703198 4.0350918,7.7114225 c 0,0.5908113 0,1.1816225 0,1.7724337 -0.6492203,0.1199984 -1.0121674,-0.046276 -0.8350915,-0.7525743 0,-1.8065537 0,-3.6131075 0,-5.4196612 1.1961089,0.095462 2.6058923,-0.3111926 3.586475,0.5599789 0.6927725,0.8104073 0.5172409,2.4519322 -0.6595207,2.7183752 z M 4.0350918,3.997884 c 0,0.7303605 0,1.4607211 0,2.1910816 C 4.8376113,6.1565063 6.0937907,6.4189973 6.2853429,5.3437972 6.5797893,4.0602421 5.1637615,3.9016246 4.2489637,3.997884 c -0.071291,0 -0.1425813,0 -0.2138719,0 z" style="fill:#e22e2d"/><path d="m 9.0869818,3.3116207 c 0.6492203,-0.1199984 1.0121672,0.046276 0.8350915,0.7525743 0,1.8065537 0,3.6131075 0,5.4196612 C 9.272853,9.6038546 8.9099059,9.4375797 9.0869818,8.7312819 c 0,-1.8065537 0,-3.6131075 0,-5.4196612 z" style="fill:#e22e2d"/><path d="m 15.284022,3.5141924 c 0.348102,1.5117213 -1.182291,0.023504 -2.03321,0.3803387 -1.807751,0.1136651 -1.025839,2.3181489 0.487359,2.0393684 1.386367,0.022175 2.440827,1.558919 1.682147,2.7985165 -0.934469,1.2495945 -2.802384,0.9367443 -4.084377,0.4785885 -0.358498,-1.5695895 1.069952,-0.072775 1.955437,-0.285254 1.792387,0.3658334 1.96111,-2.363074 0.133513,-2.2107072 -1.121125,-0.06255 -2.432245,-0.8444042 -2.07784,-2.1414837 0.399016,-1.7290779 2.66758,-1.4973776 3.936971,-1.0593672 z" style="fill:#e22e2d"/><path d="m 21.580281,3.787044 c 0.322677,1.6698187 -0.952346,-0.1828291 -1.914096,0.099219 -1.776958,-0.1554473 -2.515638,1.9070515 -2.103748,3.3521223 0.201341,1.6694802 2.36484,2.1334702 3.581695,1.2408809 C 21.985271,7.57544 21.6225,9.7992426 20.650105,9.4549174 18.953378,10.052626 16.79251,9.0219157 16.65319,7.1069977 c -0.317683,-1.616726 0.491142,-3.631681 2.29986,-3.8532547 0.900963,-0.1511521 1.868948,0.00685 2.627231,0.533301 z" style="fill:#e22e2d"/><path d="m 22.460847,6.8256195 c 0.742763,0 1.485526,0 2.228289,0 0.206651,0.7113806 -0.245707,0.7637516 -0.836194,0.677995 -0.417645,-0.1021325 -1.250167,0.2106108 -1.392095,-0.1672387 0,-0.1702521 0,-0.3405042 0,-0.5107563 z" style="fill:#e22e2d"/><path d="M 27.03318,9.4838562 C 26.247698,7.4264444 25.462216,5.3690325 24.676734,3.3116207 c 0.559216,-0.065686 1.065633,-0.055089 1.107893,0.6260955 0.573281,1.5234962 1.146561,3.0469924 1.719842,4.5704886 0.65319,-1.7321947 1.306381,-3.4643894 1.959571,-5.1965841 0.609353,-0.066824 1.102036,-0.053256 0.629933,0.625097 -0.704694,1.8490461 -1.409387,3.6980923 -2.114081,5.5471385 -0.315571,0 -0.631141,0 -0.946712,0 z" style="fill:#e22e2d"/><path d="M 38.546695,3.787044 C 38.869372,5.4568625 37.594349,3.6042155 36.632599,3.8862628 34.855641,3.730815 34.11696,5.7933139 34.52885,7.2383851 34.730191,8.9078657 36.893691,9.371855 38.110545,8.479266 38.951685,7.5754401 38.588914,9.7992422 37.616519,9.4549174 35.919792,10.052626 33.758924,9.0219165 33.619604,7.1069977 33.301922,5.490272 34.110745,3.4753165 35.919463,3.253743 c 0.900963,-0.151152 1.868949,0.00685 2.627232,0.533301 z" style="fill:#e22e2d"/><path d="m 39.844806,3.3116207 c 0.460352,0.089473 1.186833,-0.2633095 1.320279,0.3694153 0.846995,1.598032 1.693991,3.1960639 2.540986,4.7940958 0,-1.7211704 0,-3.4423407 0,-5.1635111 0.650641,-0.1296873 0.979851,0.062057 0.810287,0.7525743 0,1.8065537 0,3.6131075 0,5.4196612 C 44.056006,9.3943836 43.329525,9.7471657 43.196079,9.1144408 42.349084,7.5164089 41.502088,5.9183769 40.655093,4.320345 c 0,1.7211704 0,3.4423408 0,5.1635112 -0.650641,0.1296873 -0.979851,-0.062057 -0.810287,-0.7525743 0,-1.8065537 0,-3.6131075 0,-5.4196612 z" style="fill:#e22e2d"/></svg></a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/risc-v/"><span class="menu-item-name">RISC-V</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/chisel/"><span class="menu-item-name">Chisel</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/misc/"><span class="menu-item-name">Misc</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><span class="icon theme-icon-light">🌞</span><span class="icon theme-icon-dark">🌙</span></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+                    
+                        
+                        
+                            <li class="menu-item">
+                                <div id="lang-switcher">
+            <span>🇨🇳</span>
+            
+                
+                    <ul id="langs">
+                        
+                            
+                        
+                            
+                                <li><a rel="alternate" href="/en" hreflang="en" lang="en">🇺🇸</a></li>
+                            
+                        
+                    </ul>
+                
+            
+        </div>
+                            </li>
+                        
+                    
+                
+            
+        
+            
+                
+            
+        
+            
+                <li class="menu-item"><a href=""></a>
+                </li>
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="misc" data-toc-num="true">
+
+            <h1 class="post-title p-name">同步复位与异步复位</h1>
+
+            
+
+            
+                
+            
+
+            
+
+            <div class="post-body e-content">
+              <p><strong>同步复位</strong>：
+always @(posedge clock)   if (~reset)</p>
+<p><strong>异步复位</strong>：
+always @(posedge clock or negedge reset)  if (~reset)</p>
+<p>同步复位优点：<br>
+1、有利于仿真器仿真。<br>
+2、可使系统成为100%同步时序电路，有利于时序分析，可综合出的最高工作频率数值较高。<br>
+3、复位在时钟边沿到来时有效，可滤除高于时钟频率的毛刺。</p>
+<p>同步复位缺点：<br>
+1、复位信号有效时间长度必须大于时钟周期，才能真正被系统识别并完成复位，必须考虑时钟偏移、组合路径延迟、复位延时。<br>
+2、必须有时钟才能完成复位。</p>
+<p>异步复位优点：<br>
+1、复位简洁，不受时钟影响。</p>
+<p>异步复位缺点：<br>
+1、受复位信号与时钟信号不相关影响，容易产生亚稳态，造成复位紊乱。<br>
+2、易受毛刺影响触发误复位。<br>
+3、复位信号和时钟信号异步不利于仿真和综合。</p>
+<p><strong>质疑</strong>：<br>
+1、同步复位真的不受复位信号与时钟信号不相关影响，真的可以“同步”复位吗？<br>
+复位信号和其它信号一样，需要满足建立时间和保持时间，所以同步复位用到的复位信号和下面要提到的异步复位同步释放一样，必须处理成和时钟同步，否则一样出现亚稳态，造成复位紊乱。</p>
+<p>2、同步复位能否完全避免复位信号毛刺影响？<br>
+在采样时钟沿时的复位信号毛刺也可能造成复位错误，但比异步复位要好很多，异步复位在时钟全周期都受复位信号毛刺影响。</p>
+<p>3、陷阱！<br>
+引入时钟门控后，同步复位会产生无法绝对避免的隐患。上电时，更严重的是子模块复位时忘记启动时钟，会造成系统状态紊乱。特别是在对电路做细粒度时钟门控时，非常容易忽略细微的条件。</p>
+<p>可否结合同步复位和异步复位的优点？于是提出了异步复位，同步释放。</p>
+<p><strong>异步复位，同步释放</strong>：<br>
+1、复位信号产生立即复位。<br>
+2、复位状态解除在时钟沿完成。</p>
+<p>实现途径：捕获复位信号释放状态，在时钟沿输出使用。<br>
+reg d1;<br>
+reg d2;<br>
+always @(posedge clock or !reset) begin<br>
+        if (!reset) begin<br>
+                d1 &lt;= 1’b0;<br>
+                d2 &lt;= 1’b0;<br>
+        else begin<br>
+                d1 &lt;= 1’b1;<br>
+                d2 &lt;= d1;<br>
+        end<br>
+end<br>
+复位信号reset在寄存器内部和d相与，如果其上升沿刚好和时钟上升沿接近，则会在d1生成不定态，或为0，或为1。<br>
+d1为1，则持续为1，d2在下一个时钟为1，复位解除；<br>
+d1为0，则d2也保持0，下一周期d1为1，d2在下下周期为1，复位解除。<br>
+d2会不会生成不定态？不会。因为其输入被d1锁定为0，变为1时至少在复位信号升高一个时钟周期之后，屏蔽掉复位信号不定态（复位信号和0相与）。</p>
+<p>上述电路实现两种功能：<br>
+1、将复位信号锁定在时钟沿。<br>
+2、滤除亚稳态。</p>
+<p>存在问题：<br>
+1、仍然在全部时钟周期存在受复位信号毛刺影响的隐患，不能像同步复位一样将时钟沿外的毛刺天然滤除。
+毛刺可否在其它维度受控？</p>
+<p>同步复位物理实现：<br>
+正半周数据通路将一个反向器改为与非门，正半周引入“半级”延迟。<br>
+（单元库无同步复位寄存器时时钟正半周数据通路插入与门，引入两级延迟，以下不予讨论）</p>
+<p>异步复位物理实现：<br>
+正负半周数据通路各将一个反向器改为与非门，正负半周分别引入“半级”延迟。</p>
+<p><img src="/images/sync_async.svg" alt="sync_async.svg"><span class="caption">◎ 版图</span></p>
+<p><img src="/images/dff.jpg" alt="dff.jpg"><span class="caption">◎ 电路图</span></p>
+<p><strong>小结</strong>：<br>
+1、同步复位单元面积和功耗都小于异步复位。<br>
+2、同步复位抗干扰能力强于异步复位。<br>
+异步复位抗干扰能力差源于复位信号参与数据保持阶段运算（对上升沿复位而言是时钟负半周），该阶段捕获的错误将在下个时钟沿向后传递。所以，上述异步复位全周期受复位信号毛刺影响的表述是不准确的（之所以不说是错误的，是因为可能一个电路中既存在上升沿采样、又存在下降沿采样）。<br>
+如果只将寄存器采样通路中的一个反向器替换为与非门，保持通路不变，则异步复位退化为同步复位。<br>
+3、同步复位存在门控陷阱。<br>
+引入时钟门控后可能产生复位时忘记开启时钟导致未实现复位的情况。</p>
+<div style="text-align: right">2022年12月15日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+
+            
+
+        </div>
+        <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('\/sw.js');
+            });
+        }
+    </script>
+
+
+        
+
+
+
+
+
+
+
+
+    <script src="/js/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
