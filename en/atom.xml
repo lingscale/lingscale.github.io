@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
     <title type="text">Chisel RISC-V</title>
     <subtitle type="html">website of riscv.cn</subtitle>
-    <updated>2022-12-15T08:46:29&#43;08:00</updated>
+    <updated>2022-12-15T11:40:55&#43;08:00</updated>
     <id>http://www.riscv.cn/en/</id>
     <link rel="alternate" type="text/html" href="http://www.riscv.cn/en/" />
     <link rel="self" type="application/atom&#43;xml" href="http://www.riscv.cn/en/atom.xml" />
